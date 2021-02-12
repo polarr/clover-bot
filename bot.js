@@ -51,19 +51,6 @@ function sendMessage(channel, msg){
 // One time things here
 client.on("ready", ()=> {
 	console.log(`${client.user.tag} logged in`);
-	var testEmbed = embed("#000000", 
-		"Test", 
-		"https://google.com", 
-		{name: "Charles", icon_url: "https://i.pinimg.com/originals/7d/f0/7f/7df07f487fa52c55b4fe977926003365.jpg"}, 
-		"Testing Custom Embed Wrapper",
-		"https://i.pinimg.com/originals/7d/f0/7f/7df07f487fa52c55b4fe977926003365.jpg",
-		[{name: "hi1", value: "hey1"}, {name:"hi2", value: "hey2"}],
-		"https://i.pinimg.com/originals/7d/f0/7f/7df07f487fa52c55b4fe977926003365.jpg",
-		new Date(),
-		{text: "Copyright", icon_url: "https://i.pinimg.com/originals/7d/f0/7f/7df07f487fa52c55b4fe977926003365.jpg"}
-	);
-
-	// sendMessage(process.env.TEST_CHANNEL, testEmbed);
 	client.user.setPresence({
         status: "online",
         activity: {
