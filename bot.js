@@ -146,9 +146,9 @@ client.on("message", (message)=> {
 	if (msg[0] == "help"){
 		var helpEmbed = embed("#000000",
 			"Welcome to the help menu!", 
-			"https://1e9end.github.io/1egendBot/commands.md", undefined,
+			"https://github.com/1e9end/1egendBot/blob/main/commands.md", undefined,
 			"I am still in alpha development, and have limited functionality.", undefined,
-			[{name: "My current prefix is", value: process.env.PREFIX}, {name: "Commands", value: "help, hello, prefix"}, {name: "Documentation", value: "See [Github Documentation](https://1e9end.github.io/1egendBot/commands.md) for my full list of commands"}], undefined, undefined,
+			[{name: "My current prefix is", value: process.env.PREFIX}, {name: "Commands", value: "help, hello, prefix"}, {name: "Documentation", value: "See [Github Documentation](https://github.com/1e9end/1egendBot/blob/main/commands.md) for my full list of commands"}], undefined, undefined,
 			{text: "©2020-2021 1egend#3493"}
 		);
 		message.channel.send(helpEmbed);
