@@ -70,10 +70,10 @@ client.on("ready", ()=> {
 	[P]Prefix [NEW_P] - Change prefix from P to NEW_P
 	[P]Source/Credit - Show Github source and 1egend's credit
 **/
-
+/**
 cron.schedule('* * * * *', function() {
 	try{
-		client.channels.cache.get(process.env.TEST_CHANNEL).send("CRON SCHEDULING ON HEROKU?");
+		// client.channels.cache.get(process.env.TEST_CHANNEL).send("CRON SCHEDULING ON HEROKU?");
 	}
 	catch(e){
 		console.log(e);
@@ -81,6 +81,7 @@ cron.schedule('* * * * *', function() {
 
   	console.log('Running a task every minute');
 });
+**/
 
 function parseCommand(message){
 	var command = [""];
