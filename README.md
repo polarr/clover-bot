@@ -1,6 +1,6 @@
 # 1egendBot
 Personal Discord Bot, made with Discord.js on Node. <br/>
-Hosted on Heroku
+Hosted on Heroku.
 
 ## Features
 See [Documentation](https://github.com/1e9end/1egendBot/blob/main/commands.md) for details
