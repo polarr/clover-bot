@@ -1,5 +1,5 @@
 // Import environment variables
-// provess.env. BOT_TOKEN, PREFIX, 
+// provess.env. BOT_TOKEN, PREFIX, TEST_CHANNEL
 require("dotenv").config();
 
 const Discord = require('discord.js');
@@ -7,46 +7,10 @@ const { Client } = require('discord.js');
 const client = new Client();
 const cron = require('node-cron');
 
-/** 
-	EMBED WRAPPER
-
-	@param{color} Hex Integer
-	@param{title, url} String
-	@param{author} {name: (String), icon_url: (IMG URL String)}
-	@param{description, thumbnail (IMG URL)} String
-	@param{fields} [{name: string, value: string}, (inline), ...]
-	@param{image} IMG URL String
-	@param{timestamp} Date();
-	@param{footer} {text: (String), icon_url: (String)}
-**/
-
-var embed = function(color, title, url, author, description, thumbnail, fields, image, timestamp, footer){
-	var em = {
-		embed: {
-		    color: color ?? undefined,
-		    author: author ?? undefined,
-		    title: title ?? undefined,
-		    url: url ?? undefined,
-		    description: description ?? undefined,
-		    fields: fields ?? undefined,
-		    image: image ?? undefined,
-		    timestamp: timestamp ?? undefined,
-		    footer: footer ?? undefined
-	  	}
-	};
-
-	return em;
-};
-
-
-function sendMessage(channel, msg){
-	try{
-		var channel = client.channels.cache.get(channel);
-		channel.send(msg);
-	} catch (e){
-		console.log(e);
-	}
-}
+const d = require('./lib');
+// const rr = require('./rr');
+const commands = require('./commands');
+const actions = require('./actions');
 
 // One time things here
 client.on("ready", ()=> {
@@ -57,19 +21,9 @@ client.on("ready", ()=> {
             name: `${process.env.PREFIX}help`,
             type: "PLAYING"
         }
-    }); 
+    });
 });
 
-/**
-	COMMANDS
-
-	Hello! - Choose from (Hello, [name]!), (Hey, [name]!), (What's up?). 
-	But check if their name is a ping, and if so reply (What a clever one. But that won't make it past me ;))
-
-	[P]Help - Show help menu with list of commands
-	[P]Prefix [NEW_P] - Change prefix from P to NEW_P
-	[P]Source/Credit - Show Github source and 1egend's credit
-**/
 /**
 cron.schedule('* * * * *', function() {
 	try{
@@ -83,92 +37,44 @@ cron.schedule('* * * * *', function() {
 });
 **/
 
-function parseCommand(message){
-	var command = [""];
-	if (message[0] != process.env.PREFIX){
-		return false;
-	}
-
-	var z = 0;
-	for (var i = 1; i < message.length; ++i){
-		if (message[i] == " " && command[z] != ""){
-			++z;
-			command.push("");
-			continue;
-		}
-
-		command[z] += message[i].toLowerCase();
-	}
-
-	return command;
-}
-
-// hello, prefix, help
-const descriptions = [["hello", "Greets you warmly :heart:", "None"], ["prefix", "Changes your prefix", "[prefix] - A single character that will serve as your new prefix"], ["help", "Shows commands and information about them", "[command] - The command to show help for, if omitted, shows the help menu"]];
-const greetings = ["Hey! <@", "What's up? <@", "Hello, <@", "How's it going? <@", "Hi! <@"];
-client.on("message", (message)=> {
+client.on("message", async function(message){
 	if (message.author.bot) {
 		return;
 	}
 	console.log(`[${message.author.tag}]: ${message.content}`);
 
-	var msg = parseCommand(message.content);
-	// console.log(msg[1]);
-	if (msg[0] === "hello"){
-		if (message.author.username == "everyone" || message.author.username == "here"){
-			message.reply("What a clever one. But that won't make it past me ;)")
-		}
-		else{
-			var randomN = Math.floor(3 * Math.random());
-			message.channel.send(greetings[randomN] + message.author + '>');
-		}
-
+	var msg = d.parseCommand(message.content);
+	console.log(msg);
+	if (!msg || msg[0] == ""){
+		return;
+	}
+	if (msg[0] == "hello"){
+		commands.hello(message);
 		return;
 	}
 
 	if (msg[0] == "prefix"){
-		if (msg[1].length == 1){
-			process.env.PREFIX = msg[1];
-			message.channel.send(`Prefix successfully changed to ${msg[1]}`);
-		}
-		else{
-			message.channel.send(`Please input a valid prefix to change to. The format is, ` + process.env.PREFIX + `prefix [prefix]`);
-			message.channel.send(`The prefix must be one character long`);
-		}
+		commands.prefix(message, msg[1]);
 		return;
 	}
 
 	if (msg[0] == "help"){
-		if (msg.length == 1){
-			var helpEmbed = embed("#000000",
-				"Welcome to the help menu!", 
-				"https://github.com/1e9end/1egendBot/blob/main/commands.md", undefined,
-				"I am still in alpha development, and have limited functionality.", undefined,
-				[{name: "My current prefix is", value: process.env.PREFIX}, {name: "Commands", value: "help, hello, prefix"}, {name: "Documentation", value: "See [Github Documentation](https://github.com/1e9end/1egendBot/blob/main/commands.md) for my full list of commands"}], undefined, undefined,
-				{text: "©2020-2021 1egend"}
-			);
-			message.channel.send(helpEmbed);
-		}
-		else if (msg.length > 2){
-			message.channel.send("Please input valid command to seek help for.\nTo view all commands, type " + process.env.PREFIX + "help");
-		}
-		else{
-			for (var i = 0; i < descriptions.length; ++i){
-				if (msg[1] == descriptions[i][0]){
-					var helpEmbed = embed("#000000",
-						descriptions[i][0], 
-						undefined, undefined,
-						descriptions[i][1], undefined,
-						[{name: "Parameters", value: descriptions[i][2]}], undefined, undefined,
-						{text: "©2020-2021 1egend"}
-					);
-					message.channel.send(helpEmbed);
-					return;
-				}
-			}
-			message.channel.send("Please input valid command to seek help for.\nTo view all commands, type " + process.env.PREFIX + "help");
-		}
+		commands.help(message, msg);
+		return;
 	}
+
+	if (msg[0] == "poke" || msg[0] == "hug" || msg[0] == "kiss" || msg[0] == "cuddle" || msg[0] == "pat" || msg[0] == "slap"){
+		var person = message.mentions.members.first();
+		if (!person){
+			message.channel.send("Please mention a valid user to " + msg[0]);
+			return;
+		}
+		actions.parseAction(message, msg[0], person);
+		
+		return;
+	}
+
+	message.channel.send("Please use valid command.\nTo view all commands, type " + process.env.PREFIX + "help");
 });
 
 client.on("messageDelete", (message)=> {
@@ -183,15 +89,6 @@ client.on("messageDelete", (message)=> {
 		}
 	}
 });
-
-function runCommand(command){
-	switch(command){
-		case command[0] == "prefix":
-		break;
-		default:
-			return false;
-	}
-}
 
 // Connect to Discord API gateway
 client.login(process.env.BOT_TOKEN);
