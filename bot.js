@@ -91,26 +91,21 @@ function parseCommand(message){
 
 	var z = 0;
 	for (var i = 1; i < message.length; ++i){
-		if (message[i] == " "){
+		if (message[i] == " " && command[z] != ""){
 			++z;
 			command.push("");
 			continue;
 		}
 
-		command[z] += message[i];
-	}
-
-	for (var i = 0; i < command.length; ++i){
-		if (command[i] == ""){
-			command.splice(i, 1);
-			--i;
-		}
+		command[z] += message[i].toLowerCase();
 	}
 
 	return command;
 }
 
-var greetings = ["Hey! <@", "What's up? <@", "Hello, <@"];
+// hello, prefix, help
+const descriptions = [["hello", "Greets you warmly :heart:", "None"], ["prefix", "Changes your prefix", "[prefix] - A single character that will serve as your new prefix"], ["help", "Shows commands and information about them", "[command] - The command to show help for, if omitted, shows the help menu"]];
+const greetings = ["Hey! <@", "What's up? <@", "Hello, <@", "How's it going? <@", "Hi! <@"];
 client.on("message", (message)=> {
 	if (message.author.bot) {
 		return;
@@ -144,14 +139,35 @@ client.on("message", (message)=> {
 	}
 
 	if (msg[0] == "help"){
-		var helpEmbed = embed("#000000",
-			"Welcome to the help menu!", 
-			"https://github.com/1e9end/1egendBot/blob/main/commands.md", undefined,
-			"I am still in alpha development, and have limited functionality.", undefined,
-			[{name: "My current prefix is", value: process.env.PREFIX}, {name: "Commands", value: "help, hello, prefix"}, {name: "Documentation", value: "See [Github Documentation](https://github.com/1e9end/1egendBot/blob/main/commands.md) for my full list of commands"}], undefined, undefined,
-			{text: "©2020-2021 1egend#3493"}
-		);
-		message.channel.send(helpEmbed);
+		if (msg.length == 1){
+			var helpEmbed = embed("#000000",
+				"Welcome to the help menu!", 
+				"https://github.com/1e9end/1egendBot/blob/main/commands.md", undefined,
+				"I am still in alpha development, and have limited functionality.", undefined,
+				[{name: "My current prefix is", value: process.env.PREFIX}, {name: "Commands", value: "help, hello, prefix"}, {name: "Documentation", value: "See [Github Documentation](https://github.com/1e9end/1egendBot/blob/main/commands.md) for my full list of commands"}], undefined, undefined,
+				{text: "©2020-2021 1egend"}
+			);
+			message.channel.send(helpEmbed);
+		}
+		else if (msg.length > 2){
+			message.channel.send("Please input valid command to seek help for.\nTo view all commands, type " + process.env.PREFIX + "help");
+		}
+		else{
+			for (var i = 0; i < descriptions.length; ++i){
+				if (msg[1] == descriptions[i][0]){
+					var helpEmbed = embed("#000000",
+						descriptions[i][0], 
+						undefined, undefined,
+						descriptions[i][1], undefined,
+						[{name: "Parameters", value: descriptions[i][2]}], undefined, undefined,
+						{text: "©2020-2021 1egend"}
+					);
+					message.channel.send(helpEmbed);
+					return;
+				}
+			}
+			message.channel.send("Please input valid command to seek help for.\nTo view all commands, type " + process.env.PREFIX + "help");
+		}
 	}
 });
 
