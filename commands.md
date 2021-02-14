@@ -9,7 +9,7 @@ If you have changed the prefix on the bot, replace `$` with whatever your prefix
 - $help [command_name]: Shows info about [command_name]. If [command_name] is omitted (i.e just $help), shows the Help Menu
 - $hello: Replies with a randomly chosen warm greeting 🤎
 - $prefix [new_prefix]: Changes the prefix to [new_prefix]. <br/>
-**[new_prefix] can only be chosen from the list: `!, $, %, ^, &, *, ?, ;, ~, +, -, =, >, <`**
+**[new_prefix] can only be chosen from the list: `!, $, ., %, ^, &, *, ?, ;, ~, +, -, =, >, <`**
 
 ## Actions
 These are commands for fun that allow you to interact with other members
