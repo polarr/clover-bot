@@ -1,9 +1,5 @@
 /**
-	Commands module
-**/
-
-/**
-	COMMANDS
+	COMMANDS MODULE
 
 	Hello! - Choose from (Hello, [name]!), (Hey, [name]!), (What's up?). 
 	But check if their name is a ping, and if so reply (What a clever one. But that won't make it past me ;))
@@ -32,32 +28,32 @@ function hello(message){
 	}
 }
 
-const prefixes = ['!', '$', '%', '^', '&', '*', '?', ';', '~', '+', '-', '=', '>', '<'];
-function prefix(message, prefix){
-	if (!prefix || prefix.length != 1){
+const prefixes = ['!', '$', '.', '%', '^', '&', '*', '?', ';', '~', '+', '-', '=', '>', '<'];
+function prefix(message, pfx){
+	if (!pfx || pfx.length != 1){
 		message.channel.send(`The prefix must be one character long`);
 	}
 	else{
 		for (var i = 0; i < prefixes.length; ++i){
-			if (prefix == prefixes[i]){
-				process.env.PREFIX = prefix;
-				message.channel.send(`Prefix successfully changed to ${prefix}`);
+			if (pfx == prefixes[i]){
+				d.setPrefix(message.guild.id, pfx);
+				message.channel.send(`Prefix successfully changed to ${pfx}`);
 				return;
 			}
 		}
-		message.channel.send(`The prefix can only be chosen from !, $, %, ^, &, *, ?, ;, ~, +, -, =, >, <`);
+		message.channel.send(`The prefix can only be chosen from !, $, ., %, ^, &, *, ?, ;, ~, +, -, =, >, <`);
 	}
 	
 }
 
 const descriptions = [["hello", "Greets you warmly :heart:", "None"], ["prefix", "Changes your prefix", "[prefix] - A single character that will serve as your new prefix"], ["help", "Shows commands and information about them", "[command] - The command to show help for, if omitted, shows the help menu"]];
-function help(message, msg){
+function help(message, msg, prefix){
 	if (msg.length == 1){
 		var helpEmbed = d.embed("#000000",
 			"Welcome to the help menu!", 
 			"https://github.com/1e9end/1egendBot/blob/main/commands.md", undefined,
 			"I am still in alpha development, and have limited functionality.", undefined,
-			[{name: "My current prefix is", value: process.env.PREFIX}, {name: "Commands", value: "help, hello, prefix"}, {name: "Documentation", value: "See [Github Documentation](https://github.com/1e9end/1egendBot/blob/main/commands.md) for my full list of commands"}], undefined, undefined,
+			[{name: "My current prefix is", value: prefix}, {name: "Commands", value: "help, hello, prefix"}, {name: "Documentation", value: "See [Github Documentation](https://github.com/1e9end/1egendBot/blob/main/commands.md) for my full list of commands"}], undefined, undefined,
 			{text: "©2020-2021 1egend"}
 		);
 		message.channel.send(helpEmbed);
