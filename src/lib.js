@@ -60,7 +60,7 @@ function setPrefix(id, prefix){
 		if (err){
 			throw err;
 		}
-		var dbo = db.db("1egendBot");
+		var dbo = db.db("Akira");
 		var filter = { name: id };
 		if(await dbo.collection("prefixes").countDocuments(filter, {limit: 1})){
 			// Prefix already set
@@ -104,7 +104,7 @@ function parseMessage(message, id, callback){
 		if (err){
 			throw err;
 		}
-		var dbo = db.db("1egendBot");
+		var dbo = db.db("Akira");
 		var filter = { name: id };
 		var x;
 		if (await dbo.collection("prefixes").countDocuments(filter, {limit: 1})){

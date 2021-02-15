@@ -51,9 +51,9 @@ function help(message, msg, prefix){
 	if (msg.length == 1){
 		var helpEmbed = d.embed("#000000",
 			"Welcome to the help menu!", 
-			"https://github.com/1e9end/1egendBot/blob/main/commands.md", undefined,
+			"https://github.com/1e9end/Akira/blob/main/commands.md", undefined,
 			"I am still in alpha development, and have limited functionality.", undefined,
-			[{name: "My current prefix is", value: prefix}, {name: "Commands", value: "help, hello, prefix"}, {name: "Documentation", value: "See [Github Documentation](https://github.com/1e9end/1egendBot/blob/main/commands.md) for my full list of commands"}], undefined, undefined,
+			[{name: "My current prefix is", value: prefix}, {name: "Commands", value: "help, hello, prefix"}, {name: "Documentation", value: "See [Github Documentation](https://github.com/1e9end/Akira/blob/main/commands.md) for my full list of commands"}], undefined, undefined,
 			{text: "©2020-2021 1egend"}
 		);
 		message.channel.send(helpEmbed);
