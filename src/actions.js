@@ -12,7 +12,7 @@ const d = require('./lib');
 
 function parseAction(message, msg, person){
 	var interactEmbed = d.embed("#000000",
-		`${person.displayName} recieved a ${msg} from ${message.author.username}!`, 
+		`${person.displayName} recieved a ${msg} from ${message.member.displayName}!`, 
 		undefined, undefined,
 		undefined, undefined,
 		undefined, undefined, new Date(),

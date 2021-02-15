@@ -38,7 +38,7 @@ cron.schedule('* * * * *', function() {
 **/
 
 client.on("message", async function(message){
-	if (message.author.bot) {
+	if (message.channel.type != 'text' || message.author.bot) {
 		return;
 	}
 	console.log(`[${message.author.tag}]: ${message.content}`);
@@ -53,7 +53,7 @@ client.on("message", async function(message){
 			return;
 		}
 
-		if (msg[0] == "prefix"){
+		if (msg[0] == "prefix" || msg[0] == "pfx"){
 			commands.prefix(message, msg[1]);
 			return;
 		}
@@ -74,11 +74,24 @@ client.on("message", async function(message){
 			return;
 		}
 
+		if (msg[0] == "inv" || msg[0] == "invite" || msg[0] == "info" || msg[0] == "about" || msg[0] == "akira"){
+			commands.info(message);
+			return;
+		}
+
+		if (msg[0] == "kick"){
+			commands.kick(message);
+			return;
+		}
+
 		message.channel.send("Please use valid command.\nTo view all commands, type " + process.env.PREFIX + "help");
 	});
 });
 
 client.on("messageDelete", (message)=> {
+	if (message.author.bot){
+		return;
+	}
 	var text = message.content;
 	console.log(`[${message.author.tag}] deleted: ${text}`);
 	for (var i = 0; i < text.length; ++i){
