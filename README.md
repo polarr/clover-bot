@@ -1,6 +1,6 @@
-# 1egendBot
-Personal Discord Bot, made with Discord.js on Node. <br/>
-Hosted on Heroku. Data stored in MongoDB.
+# Akira
+Personal Discord Bot, written in Node.js. <br/>
+Made using Discord.js, hosted on Heroku., data stored in MongoDB.
 
 ## Features
 See [Documentation](https://github.com/1e9end/1egendBot/blob/main/commands.md) for details
