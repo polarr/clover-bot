@@ -46,14 +46,32 @@ function prefix(message, pfx){
 	
 }
 
-const descriptions = [["hello", "Greets you warmly :heart:", "None"], ["prefix", "Changes your prefix", "[prefix] - A single character that will serve as your new prefix"], ["help", "Shows commands and information about them", "[command] - The command to show help for, if omitted, shows the help menu"]];
+const descriptions = [
+/** Fun commands **/
+["hello", "Greets you warmly :heart:"], 
+/** Server commands **/
+["prefix", "Changes your prefix", "`[prefix]` - A single character that will serve as your new prefix"], 
+["help", "Shows commands and information about them", "`[command]` - The command to show help for, if omitted, shows the help menu"],
+/** Moderation commands **/
+["kick", "Kicks mentioned members", "`[member1, member2, ...]` - List of mentions that Akira will kick if you have strictly higher permissions than them", "Kick Members"],
+["ban", "Bans mentioned members", "`[member1, member2, ...]` - List of mentions that Akira will ban if you have strictly higher permissions than them", "Ban Members"],
+["unban", "Unbans member", "`[member]` - A mention or User ID that Akira will unban from the server", "Ban Members"],
+/** Action commands **/
+["poke", "Pokes a member", "`[member]` - A mention of the member you poke"],
+["hug", "Hugs a member", "`[member]` - A mention of the member you hug"],
+["kiss", "Kisses a member", "`[member]` - A mention of the member you kiss"],
+["cuddle", "Cuddles a member", "`[member]` - A mention of the member you cuddle"],
+["pat", "Pats a member", "`[member]` - A mention of the member you pat"],
+["slap", "Slaps a member", "`[member]` - A mention of the member you slap"]];
+
 function help(message, msg, prefix){
 	if (msg.length == 1){
 		var helpEmbed = d.embed("#000000",
-			"Welcome to the help menu!", 
-			"https://github.com/1e9end/Akira/blob/main/commands.md", undefined,
-			"I am still in alpha development, and have limited functionality.", undefined,
-			[{name: "My current prefix is", value: prefix}, {name: "Commands", value: "help, hello, prefix"}, {name: "Documentation", value: "See [Github Documentation](https://github.com/1e9end/Akira/blob/main/commands.md) for my full list of commands"}], undefined, undefined,
+			"Akira Help Menu", 
+			undefined, undefined,
+			"Type " + prefix + "help [command] for details on a command!", "https://images.freeimg.net/rsynced_images/help-icon.jpg",
+			[{name: "Commands", value: "help, hello, prefix"}, {name: "Further Help", value: "See [Documentation](https://github.com/1e9end/Akira/blob/main/commands.md) or join [Support Server](https://discord.gg/DAaRAHWw9W) for manual help."}], 
+			undefined, undefined,
 			{text: "©2020-2021 1egend"}
 		);
 		message.channel.send(helpEmbed);
@@ -68,9 +86,15 @@ function help(message, msg, prefix){
 					descriptions[i][0], 
 					undefined, undefined,
 					descriptions[i][1], undefined,
-					[{name: "Parameters", value: descriptions[i][2]}], undefined, undefined,
+					[], undefined, undefined,
 					{text: "©2020-2021 1egend"}
 				);
+				if (descriptions[i].length > 2){
+					helpEmbed.embed.fields.push({name: "Arguments", value: descriptions[i][2]});
+				}
+				if (descriptions[i].length > 3){
+					helpEmbed.embed.fields.push({name: "Required Permissions", value: descriptions[i][3]});
+				}
 				message.channel.send(helpEmbed);
 				return;
 			}
@@ -116,8 +140,63 @@ function kick(message){
 	}
 }
 
-function ban(message, msg){
+function ban(message){
+	var bans = message.mentions.members.array();
+	if (bans.length == 0){
+		message.channel.send("Specify at least 1 member to ban");
+		return;
+	}
+	if (!message.member.hasPermission("BAN_MEMBERS")){
+		message.reply("You don't have permission to ban members!");
+		return;
+	}
+	for (var i = 0; i < bans.length; ++i){
+		var mem = bans[i];
+		if (message.guild.ownerID === message.author.id || !mem.hasPermission("BAN_MEMBERS") || (message.member.hasPermission("ADMINISTRATOR") && !mem.hasPermission("ADMINISTRATOR"))){
+			mem.ban({reason: "Banned by " + message.author.tag}).then(m => {
+				message.channel.send('Banned <@' + mem.user.id + '>.');
+			}).catch((error) => {
+				console.log(error);
+				message.channel.send(`Error, could not ban ${mem.user.tag}. REASON: ` + error);
+			});
+		}
+		else{
+			message.channel.send(`Could not ban ${mem.user.tag} because they have same/higher permissions than you.`);
+		}
+	}
+}
 
+function unban(message, msg, prefix){
+	if (msg.length < 2){
+		message.channel.send("Specify a user (mention/ID) to unban. Can only unban 1 user at a time.");
+		return;
+	}
+	var user = msg[1];
+	user = user.replace(/[<@!>]/g, '');
+
+	// console.log(user);
+	if (!message.member.hasPermission("BAN_MEMBERS")){
+		message.reply("You don't have permission to ban/unban members!");
+		return;
+	}
+	message.guild.fetchBans().then(bans => {
+        var mem = bans.get(user);
+
+        if (mem == null) {
+          message.channel.send(`<@${user}> was never banned or doesn\'t exist.`);
+          return;
+        }
+
+        message.guild.members.unban(user, 'Unbanned by ' + message.author.tag).then(user => {
+        	message.channel.send(`Unbanned ${user} from ${message.guild.name}` );
+        }).catch((error) => {
+        	console.log(error);
+        	message.channel.send(`Error, could not unban <@${user}>. REASON: ` + error);
+        });
+    }).catch((error) => {
+    	console.log(error);
+    	message.channel.send("Error, could not fetch bans. REASON: " + error);
+    });
 }
 
 function info(message){
@@ -139,5 +218,6 @@ module.exports = {
 	help: help,
 	info: info,
 	kick: kick,
-	ban: ban
+	ban: ban,
+	unban: unban
 };

@@ -8,21 +8,16 @@ const mongo = require("mongodb");
 
 // MongoDB Database
 const mongoClient = require("mongodb").MongoClient;
-
-function insertDocument(err, db){
-	if (err) throw err;
-	
-}
-
 /** 
 	EMBED WRAPPER
 
 	@param{color} Hex Integer
 	@param{title, url} String
 	@param{author} {name: (String), icon_url: (IMG URL String)}
-	@param{description, thumbnail (IMG URL)} String
-	@param{fields} [{name: string, value: string}, (inline), ...]
-	@param{image} IMG URL String
+	@param{description} String
+	@param{thumbnail} {url: IMG URL String}
+	@param{fields} [{name: string, value: string, inline: boolean}, ...]
+	@param{image} {url: IMG URL String}
 	@param{timestamp} Date();
 	@param{footer} {text: (String), icon_url: (String)}
 **/
@@ -34,9 +29,10 @@ var embed = function(color, title, url, author, description, thumbnail, fields, 
 		    author: author ?? undefined,
 		    title: title ?? undefined,
 		    url: url ?? undefined,
+		    thumbnail: {url: thumbnail} ?? undefined,
 		    description: description ?? undefined,
 		    fields: fields ?? undefined,
-		    image: image ?? undefined,
+		    image: {url: image} ?? undefined,
 		    timestamp: timestamp ?? undefined,
 		    footer: footer ?? undefined
 	  	}

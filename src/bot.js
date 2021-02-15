@@ -84,6 +84,16 @@ client.on("message", async function(message){
 			return;
 		}
 
+		if (msg[0] == "ban"){
+			commands.ban(message);
+			return;
+		}
+
+		if (msg[0] == "unban"){
+			commands.unban(message, msg, prefix);
+			return;
+		}
+
 		message.channel.send("Please use valid command.\nTo view all commands, type " + process.env.PREFIX + "help");
 	});
 });
