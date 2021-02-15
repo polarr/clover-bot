@@ -2,7 +2,7 @@
 Multifunctional Discord Bot, with fun and useful features. A great addition to your server! [Invite](https://discord.com/oauth2/authorize?client_id=798018191066136646&scope=bot&permissions=8)
 
 ## Features
-See [Documentation](https://github.com/1e9end/Akira/blob/main/commands.md) for details. Join [Discord Support Server] for manual help.
+See [Documentation](https://github.com/1e9end/Akira/blob/main/commands.md) for details. Join [Discord Support Server](discord.gg/DAaRAHWw9W) for manual help.
 - Moderation (kick, ban, unban)
 - Actions w/ Anime images
 - Server specific prefixes
