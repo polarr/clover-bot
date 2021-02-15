@@ -3,13 +3,14 @@ Multifunctional Discord Bot, with fun and useful features. A great addition to y
 
 ## Features
 See [Documentation](https://github.com/1e9end/Akira/blob/main/commands.md) for details
-- Basic commands
-- Actions
+- Moderation (kick, ban, unban)
+- Actions w/ Anime images
+- Server specific prefixes
 
 ## Upcoming
-- Moderation
 - Reaction Roles
-- Economy Game System (data stored on MongoDB)
+- Economy Game System
+- Mini games
 - Fun Integrations (Anime)
 - Utility Integrations (Wolfram|Alpha, LaTeX, Codeforces, etc)
 
