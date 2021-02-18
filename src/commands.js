@@ -70,7 +70,7 @@ function help(message, msg, prefix){
 			"Akira Help Menu", 
 			undefined, undefined,
 			"Type " + prefix + "help [command] for details on a command!", "https://images.freeimg.net/rsynced_images/help-icon.jpg",
-			[{name: "Commands", value: "help, hello, prefix"}, {name: "Further Help", value: "See [Documentation](https://github.com/1e9end/Akira/blob/main/commands.md) or join [Support Server](https://discord.gg/DAaRAHWw9W) for manual help."}], 
+			[{name: "Commands", value: "help, hello, prefix, kick, ban, unban, poke, hug, kiss, cuddle, pat, slap"}, {name: "Further Help", value: "See [Documentation](https://github.com/1e9end/Akira/blob/main/commands.md) or join [Support Server](https://discord.gg/DAaRAHWw9W) for manual help."}], 
 			undefined, undefined,
 			{text: "©2020-2021 1egend"}
 		);
