@@ -48,71 +48,58 @@ client.on("message", async function(message){
 		if (!msg || msg[0] == ""){
 			return;
 		}
-		if (msg[0] == "hello" || msg[0] == "hi" || msg[0] == "yo" || msg[0] == "hey"){
-			commands.hello(message);
-			return;
+		switch(msg[0]){
+			case "hello": case "hi": case "yo": case "hey":
+				commands.hello(message);
+				break;
+			case "prefix": case "pfx":
+				commands.prefix(message, msg[1]);
+				break;
+			case "help":
+				commands.help(message, msg, prefix);
+				break;
+			case "poke": case "hug": case "kiss": case "cuddle": case "pat": case"slap":
+				var person = message.mentions.members.first();
+				if (!person){
+					message.channel.send("Please mention a valid user to " + msg[0]);
+					return;
+				}
+				actions.parseAction(message, msg[0], person);
+				break;
+			case "inv": case "invite": case "info": case "about": case "akira":
+				commands.info(message);
+				break;
+			case "kick":
+				commands.kick(message);
+				break;
+			case "ban":
+				commands.ban(message);
+				break;
+			case "unban":
+				commands.unban(message, msg, prefix);
+				break;
+			default:
+				message.channel.send("Please use valid command.\nTo view all commands, type " + process.env.PREFIX + "help");
 		}
-
-		if (msg[0] == "prefix" || msg[0] == "pfx"){
-			commands.prefix(message, msg[1]);
-			return;
-		}
-
-		if (msg[0] == "help"){
-			commands.help(message, msg, prefix);
-			return;
-		}
-
-		if (msg[0] == "poke" || msg[0] == "hug" || msg[0] == "kiss" || msg[0] == "cuddle" || msg[0] == "pat" || msg[0] == "slap"){
-			var person = message.mentions.members.first();
-			if (!person){
-				message.channel.send("Please mention a valid user to " + msg[0]);
-				return;
-			}
-			actions.parseAction(message, msg[0], person);
-			
-			return;
-		}
-
-		if (msg[0] == "inv" || msg[0] == "invite" || msg[0] == "info" || msg[0] == "about" || msg[0] == "akira"){
-			commands.info(message);
-			return;
-		}
-
-		if (msg[0] == "kick"){
-			commands.kick(message);
-			return;
-		}
-
-		if (msg[0] == "ban"){
-			commands.ban(message);
-			return;
-		}
-
-		if (msg[0] == "unban"){
-			commands.unban(message, msg, prefix);
-			return;
-		}
-
-		message.channel.send("Please use valid command.\nTo view all commands, type " + process.env.PREFIX + "help");
 	});
 });
 
+/** Ghost Ping
 client.on("messageDelete", (message)=> {
 	if (message.author.bot){
 		return;
 	}
 	var text = message.content;
-	console.log(`[${message.author.tag}] deleted: ${text}`);
+	console.log(`[${message.author.tag} DELETED]: ${text}`);
 	for (var i = 0; i < text.length; ++i){
 		if (text[i] == "@"){
 			// Check further for ghost ping...
 
-			// If ghost ping, send...
 			message.channel.send(`Ghost ping detected! How shameful of you, <@${message.author.id}>...`);
 		}
 	}
 });
+**/
 
 // Connect to Discord API gateway
 client.login(process.env.BOT_TOKEN);

@@ -1,12 +1,5 @@
 /**
 	COMMANDS MODULE
-
-	Hello! - Choose from (Hello, [name]!), (Hey, [name]!), (What's up?). 
-	But check if their name is a ping, and if so reply (What a clever one. But that won't make it past me ;))
-
-	[P]Help - Show help menu with list of commands
-	[P]Prefix [NEW_P] - Change prefix from P to NEW_P
-	[P]Source/Credit - Show Github source and 1egend's credit
 **/
 
 const Discord = require('discord.js');
