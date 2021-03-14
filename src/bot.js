@@ -24,19 +24,6 @@ client.on("ready", ()=> {
     });
 });
 
-/**
-cron.schedule('* * * * *', function() {
-	try{
-		// client.channels.cache.get(process.env.TEST_CHANNEL).send("CRON SCHEDULING ON HEROKU?");
-	}
-	catch(e){
-		console.log(e);
-	}
-
-  	console.log('Running a task every minute');
-});
-**/
-
 client.on("message", async function(message){
 	if (message.channel.type != 'text' || message.author.bot) {
 		return;
@@ -78,8 +65,6 @@ client.on("message", async function(message){
 			case "unban":
 				commands.unban(message, msg, prefix);
 				break;
-			default:
-				message.channel.send("Please use valid command.\nTo view all commands, type " + process.env.PREFIX + "help");
 		}
 	});
 });
