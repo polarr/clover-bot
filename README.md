@@ -1,3 +1,6 @@
+# Currently in development do not use
+
+
 # [Akira](https://1e9end.github.io/Akira)
 Multifunctional Discord Bot, with fun and useful features. A great addition to your server! [Invite](https://discord.com/oauth2/authorize?client_id=798018191066136646&scope=bot&permissions=470281286)
 
