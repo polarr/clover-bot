@@ -19,6 +19,4 @@ See [Documentation](https://github.com/1e9end/Akira/blob/main/commands.md) for d
 
 ## Credits
 Source written by [1egend](1e9end.github.io) in Node.js.<br>
-Made with Discord.js, hosted on Heroku, data stored in MongoDB.
-- Nekos.life API for images displayed with action commands
-- Node Cron for scheduled jobs
+Tags: Discord.js, Heroku, MongoDB
