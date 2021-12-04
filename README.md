@@ -1,22 +1,17 @@
-# Currently in development do not use
+> Currently in development, use at your own risk
 
 
-# [Akira](https://1e9end.github.io/Akira)
+# [Clover](https://1e9end.github.io/clover-bot)
 Multifunctional Discord Bot, with fun and useful features. A great addition to your server! [Invite](https://discord.com/oauth2/authorize?client_id=798018191066136646&scope=bot&permissions=470281286)
 
 ## Features
-See [Documentation](https://github.com/1e9end/Akira/blob/main/commands.md) for details. Join [Discord Support Server](discord.gg/DAaRAHWw9W) for manual help.
-- Moderation (kick, ban, unban)
-- Actions w/ Anime images
-- Server specific prefixes
+See [Commands](https://github.com/1e9end/clover-bot/blob/main/commands.md) for details.
+- Moderation
+- Actions
+- Prefixes
 
-## Upcoming
+## Upcoming Features
 - Reaction Roles
-- Economy Game System
-- Mini games
-- Fun Integrations (Anime)
-- Utility Integrations (Wolfram|Alpha, LaTeX, Codeforces, etc)
-
-## Credits
-Source written by [1egend](1e9end.github.io) in Node.js.<br>
-Tags: Discord.js, Heroku, MongoDB
+- Economy System
+- Mini Games
+- Anime
